@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>www.carparking.com</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="font-awesome/kuku/css/font-awesome.min.css">
+    <script type = "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+   <script type = "text/javascript" src="js/bootstrap.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+</head>
+<form id="myForm" action="/submit" method="post">
+<body style="background-image: url('grad4.jpg');"></body>
+
+    <div class="container" style="margin-left: 200px; margin-top: 50px;">
+        driver Details <hr style="width: 540px;">
+        <label for="state" class="form-lebel">
+            <div class="row">
+                <div class="col-md-2" style="margin-top: 5px;">
+                    Driver ID
+                </div>
+                <div class="col-md-10">
+                    <input readonly type="text" id="driverid" name="driverid" placeholder="driverid" :disabled="!isEditable" class="form-control" style="width: 450px; ">   
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2" style="margin-top: 5px;">First Name</div>
+
+            
+        </label>
+        <div class="col-md-10">
+            
+            <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" class="form-control" style="width: 450px; "></div></div>
+            <br>
+
+           
+            <div class="row">
+                <div class="col-md-2" style="margin-top: 5px;">
+                    Last Name
+                </div>
+                <div class="col-md-10">
+                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" class="form-control" style="width: 450px; ">   
+                </div>
+
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2" style="margin-top: 5px;">
+                   Phone Number
+                </div>
+                <div class="col-md-10">
+                    <input type="text" id="mobile_no" name="mobile_no" placeholder="Enter your phone number" class="form-control" style="width: 450px; ">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2" style="margin-top: 5px;">
+                   
+                </div>
+            
+            </div><br>
+            <a href="delete.html"type="button" class="btn btn-outline-dark" >Cancel</a>
+        <a href="#" type="button"  id ="btn" onclick="butn()" type="submit" class="btn btn-primary">Save</a>
+      
+    </div>
+    <script language="JavaScript">
+        what();
+        function what(){
+            var parameters = location.search.substring(1).split("&");
+            var temp = parameters[0].split("=");
+            did = unescape(temp[1]);
+            temp = parameters[1].split("=");
+            fn = unescape(temp[1]);
+            temp = parameters[2].split("=");
+            ln = unescape(temp[1]);
+            temp = parameters[3].split("=");
+            mn = unescape(temp[1]);
+            document.getElementById("driverid").value = did;
+            document.getElementById("first_name").value = fn;
+            document.getElementById("last_name").value = ln;
+            document.getElementById("mobile_no").value = mn;
+        };
+            
+    </script>
+    <script>
+       function butn() {
+        $("#myForm").submit(function(event) {
+    event.preventDefault();
+});
+var formData = {};
+$("#myForm").find("input").each(function() {
+    formData[$(this).attr("name")] = $(this).val();
+});
+        
+             $.ajax({
+                type: "POST",
+                url: "http://localhost:2544/update_the_driver",
+                data:JSON.stringify( formData
+                   
+    
+                ),
+                dataType:"json",
+                headers:{
+                'content-Type': "application/json"
+                },
+                success: function(data) {
+                    console.log("data sent successfully");
+                    window.location="delete.html";
+                },
+                error: function(data) {
+                    alert('error');
+                }
+            });
+            
+
+        }
+    
+        
+        
+    </script>
+     
+</form>
+</body>
+</html>

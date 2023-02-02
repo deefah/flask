@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="font-awesome/kuku/css/font-awesome.min.css">
+    <script type = "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+   <script type = "text/javascript" src="js/bootstrap.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<body>
+
+    <div class="container-lg">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8"><h2>Driver<b>Details</b></h2></div>
+                        <div class="col-sm-4">
+                            <a href="driver.html" type="button" class="btn btn-info add-new" style="margin-top: 10px;"><i class="fa fa-plus"></i> Add New</a>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>first name</th>
+                            <th>last name</th>
+                            <th>phone number</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <script>
+                            var formData = {}
+                            formData["driverid"] = null;
+                            formData["first_name"] = null;
+                            formData["last_name"] = null;
+                            formData["mobile_no"] = null;
+                            $.ajax({
+                                url: 'http://localhost:2544/select_the_driver',
+                                type: 'POST',
+                                data:JSON.stringify( 
+                                    formData
+                    
+                                ),
+                                dataType:"json",
+                                headers:{
+                                'content-Type': "application/json"
+                                },
+                                success: function(data) {
+                                    console.log(data);
+                                    for(let i = 0; i < data.length; i++) {
+                                        let str = '<tr>'.concat(
+                                            "<td>"+data[i].first_name+"</td>",
+                                            "<td>"+data[i].last_name+"</td>",
+                                            "<td>"+data[i].mobile_no+"</td>",
+                                            "<td>",
+                                                "<a href='edit.html?did="+data[i].driverid+"&fn="+data[i].first_name+"&ln="+data[i].last_name+"&mn="+data[i].mobile_no+"' type ='button' class='btn btn-info EDIT' ><i class='fa fa-pencil'  style ='color: green;'></i></a>" ,
+                                                "<button type='submit' href ='delete.html' onclick = 'dlt("+data[i].driverid+")'  style ='margin-left: 10px;' class='btn btn-info DELETE'><i class='fa fa-trash' style='color: red;' ></i> </button>" ,
+                                            "</td>",
+                                            "</tr>");
+                                            $('#tableBody').append(str);
+                                       
+                                    }
+                                }
+                                });
+                                function dlt(id){
+                                    var formData = {}
+                                    formData["driverid"] = id;
+                                    $.ajax({
+                                    url: 'http://localhost:2544/delete_the_driver',
+                                    type: 'POST',
+                                    data:JSON.stringify( 
+                                        formData
+                        
+                                    ),
+                                    dataType:"json",
+                                    headers:{
+                                    'content-Type': "application/json"
+                                    },
+                                    success: function(data) {
+                                        console.log(data);
+                                        window.location="delete.html"
+                                    }
+                                    });
+
+                                }
+                        </script>
+                       
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> 
+    <script>
+       
+    </script>    
+</body>
+</html>
