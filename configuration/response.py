@@ -1,0 +1,6 @@
+code = 'code'
+message = 'message'
+driv_id = 'driverid'
+fname = 'first_name'
+lname = 'last_name'
+mob_no = 'mobile_no'
